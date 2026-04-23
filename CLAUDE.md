@@ -4,24 +4,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-This is not a code project — it is a **Claude Skill** package (`cv-opti`) that guides Claude through optimizing CVs for the dual-AI hiring landscape (ATS screening + employer fraud detection). There is no build, test, or runtime; the artifacts are markdown prompts loaded by Claude when the skill is invoked.
+This is a **Claude Code plugin** (`career-hub`, see `.claude-plugin/plugin.json`) that packages two complementary skills for managing career artefacts. There is no build, test, or runtime — artefacts are markdown prompts loaded by Claude when a skill is invoked.
 
-## Structure
+## Skills
 
-- `skills/cv-opti/SKILL.md` — skill entry point. Frontmatter (`name`, `description`) determines when Claude auto-invokes this skill. The body defines the workflow, the two-output contract (reformatted `.docx` CV + markdown strategy document), and delegates detail to the references.
-- `skills/cv-opti/references/` — progressive-disclosure detail files that `SKILL.md` points to. Claude reads these on demand rather than up front:
-  - `ats-optimization.md` — ATS formatting rules, keyword extraction, section naming.
-  - `fraud-proofing.md` — verification, red flags, consistency/gap handling.
-  - `achievement-bullets.md` — quantification framework, action verbs, interview-question test.
-  - `customization-protocol.md` — per-job tailoring workflow used after initial optimization.
-- `CV_OPTIMIZATION_SKILL_GUIDE.md`, `QUICK_REFERENCE.md`, `README.md` — top-level documentation about the skill package.
+Two top-level skills under `skills/`:
 
-## Working on this skill
+- **`career-hub/`** — builds and maintains a canonical career hub (markdown + YAML repo) as the single source of truth for roles, projects, capabilities, artefacts, and pipeline. Renders downstream targets (CV, LinkedIn, GitHub profile) from it. Composed of three phased sub-skills:
+  - `init/` — scaffold an empty compliant hub at `cwd`.
+  - `build/` — interview-driven enrichment of stubs; drafts from existing content and asks only gap questions.
+  - `publish/` — render a draft target from hub content. Built-in targets live in `publish/targets/` (`cv.md`, `linkedin.md`, `github-profile.md`); see `publish/targets/_adding-targets.md` for the target-spec schema.
+- **`cv-opti/`** — per-job CV optimization for the dual-AI hiring landscape (ATS + fraud detection). Produces a reformatted CV plus a strategy document explaining every change.
 
-- Keep `SKILL.md` short and workflow-focused; push specifics into `references/*.md`. The description field is what triggers the skill, so edits to it directly affect invocation behavior.
-- When producing CV output for a user, always generate **both** deliverables (reformatted CV + strategy document) — this two-output contract is the skill's defining promise.
-- Preserve the authenticity/verifiability principle throughout: no change should introduce unverifiable claims, even to improve ATS keyword density.
+The two compose: `career-hub:publish cv` produces an ATS-friendly markdown CV that `cv-opti` then tunes against a specific job description.
 
-## Related Skill Authoring Guidance
+## Architecture Conventions
 
-For structural/meta changes to this skill (frontmatter, progressive disclosure, description tuning), use the `skill-creator` or `plugin-dev:skill-development` skills rather than editing blind.
+- **Progressive disclosure.** Each `SKILL.md` is short and workflow-focused; detail lives in sibling `references/*.md` that Claude reads on demand. When editing, push specifics into references rather than bloating the entry point.
+- **Frontmatter is the trigger.** The `description` field in each `SKILL.md` determines auto-invocation. Edits to it directly affect when Claude picks up the skill.
+- **Hub-first, rendering-second** (career-hub). Every public claim must trace to a hub entry. `publish` filters confidential content and cross-checks against `a.foundations/biographical-facts.md`.
+- **Verifiability** (cv-opti). No change should introduce unverifiable claims, even to improve ATS keyword density. Every achievement bullet must be defendable in interviews.
+- **Two-output contract** (cv-opti). Always produce both deliverables: reformatted CV + strategy document.
+
+## Shared References
+
+`skills/career-hub/references/` — used by all three career-hub sub-skills:
+- `hub-detection.md` — how each sub-skill confirms hub location at `cwd` before writing.
+- `taxonomy.md` — four axes (category/visibility/audience/status), `.private.md` sibling convention, universal frontmatter.
+- `templates.md` — entry templates.
+
+## Design Docs
+
+- `docs/superpowers/specs/2026-04-20-career-hub-skill-design.md` — design spec.
+- `docs/superpowers/plans/2026-04-20-career-hub-skill-implementation.md` — implementation plan.
+
+## Working on these skills
+
+For structural/meta changes (frontmatter tuning, adding sub-skills, progressive disclosure restructuring), use the `skill-creator` or `plugin-dev:skill-development` skills rather than editing blind.

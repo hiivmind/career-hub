@@ -1,6 +1,6 @@
 # Hub Detection
 
-How sub-skills decide whether the current working directory is a career hub, and how they confirm before acting.
+How skills decide whether the current working directory is a career hub, and how they confirm before acting.
 
 ## Signals of a compliant hub
 
@@ -12,9 +12,9 @@ A directory is a hub if all of these are true:
 
 A directory with some but not all of these is **malformed** — refuse to proceed and surface the gap.
 
-## Sub-skill confirmation behaviour
+## Skill confirmation behaviour
 
-All three sub-skills (`init`, `build`, `publish`) confirm the hub location with the user on invocation, before taking any write action.
+All three skills (`career-hub-init`, `career-hub-build`, `career-hub-publish`) confirm the hub location with the user on invocation, before taking any write action.
 
 ### For `init`
 
@@ -49,7 +49,7 @@ Proceeds only on explicit `y`.
 We deliberately do not use a `~/.career-hub/config.yaml` pointer. Rationale:
 
 - Keeps per-machine state out of home directory.
-- Matches the existing `cv-opti` pattern (cwd-scoped).
+- Matches the existing `career-hub-optimise-cv` pattern (cwd-scoped).
 - A user with multiple hubs simply `cd`s to the right one.
 - Explicit confirmation on every invocation catches mistakes early.
 

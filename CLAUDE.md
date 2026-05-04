@@ -8,28 +8,27 @@ This is a **Claude Code plugin** (`career-hub`, see `.claude-plugin/plugin.json`
 
 ## Skills
 
-Two top-level skills under `skills/`:
+Four top-level skills under `skills/`:
 
-- **`career-hub/`** — builds and maintains a canonical career hub (markdown + YAML repo) as the single source of truth for roles, projects, capabilities, artefacts, and pipeline. Renders downstream targets (CV, LinkedIn, GitHub profile) from it. Composed of three phased sub-skills:
-  - `init/` — scaffold an empty compliant hub at `cwd`.
-  - `build/` — interview-driven enrichment of stubs; drafts from existing content and asks only gap questions.
-  - `publish/` — render a draft target from hub content. Built-in targets live in `publish/targets/` (`cv.md`, `linkedin.md`, `github-profile.md`); see `publish/targets/_adding-targets.md` for the target-spec schema.
-- **`cv-opti/`** — per-job CV optimization for the dual-AI hiring landscape (ATS + fraud detection). Produces a reformatted CV plus a strategy document explaining every change.
+- **`career-hub-init/`** — scaffold an empty compliant hub at `cwd`.
+- **`career-hub-build/`** — interview-driven enrichment of stubs; drafts from existing content and asks only gap questions.
+- **`career-hub-publish/`** — render a draft target from hub content. Built-in targets live in `career-hub-publish/targets/` (`cv.md`, `linkedin.md`, `github-profile.md`); see `career-hub-publish/targets/_adding-targets.md` for the target-spec schema.
+- **`career-hub-optimise-cv/`** — per-job CV optimization for the dual-AI hiring landscape (ATS + fraud detection). Produces a reformatted CV plus a strategy document explaining every change.
 
-The two compose: `career-hub:publish cv` produces an ATS-friendly markdown CV that `cv-opti` then tunes against a specific job description.
+The latter two compose: `career-hub-publish cv` produces an ATS-friendly markdown CV that `career-hub-optimise-cv` then tunes against a specific job description.
 
 ## Architecture Conventions
 
 - **Progressive disclosure.** Each `SKILL.md` is short and workflow-focused; detail lives in sibling `references/*.md` that Claude reads on demand. When editing, push specifics into references rather than bloating the entry point.
 - **Frontmatter is the trigger.** The `description` field in each `SKILL.md` determines auto-invocation. Edits to it directly affect when Claude picks up the skill.
-- **Hub-first, rendering-second** (career-hub). Every public claim must trace to a hub entry. `publish` filters confidential content and cross-checks against `a.foundations/biographical-facts.md`.
-- **Verifiability** (cv-opti). No change should introduce unverifiable claims, even to improve ATS keyword density. Every achievement bullet must be defendable in interviews.
-- **Two-output contract** (cv-opti). Always produce both deliverables: reformatted CV + strategy document.
+- **Hub-first, rendering-second** (career-hub-init/build/publish). Every public claim must trace to a hub entry. `publish` filters confidential content and cross-checks against `a.foundations/biographical-facts.md`.
+- **Verifiability** (career-hub-optimise-cv). No change should introduce unverifiable claims, even to improve ATS keyword density. Every achievement bullet must be defendable in interviews.
+- **Two-output contract** (career-hub-optimise-cv). Always produce both deliverables: reformatted CV + strategy document.
 
 ## Shared References
 
-`skills/career-hub/references/` — used by all three career-hub sub-skills:
-- `hub-detection.md` — how each sub-skill confirms hub location at `cwd` before writing.
+`skills/references/` — used by career-hub-init, career-hub-build, and career-hub-publish:
+- `hub-detection.md` — how each skill confirms hub location at `cwd` before writing.
 - `taxonomy.md` — four axes (category/visibility/audience/status), `.private.md` sibling convention, universal frontmatter.
 - `templates.md` — entry templates.
 
@@ -40,4 +39,4 @@ The two compose: `career-hub:publish cv` produces an ATS-friendly markdown CV th
 
 ## Working on these skills
 
-For structural/meta changes (frontmatter tuning, adding sub-skills, progressive disclosure restructuring), use the `skill-creator` or `plugin-dev:skill-development` skills rather than editing blind.
+For structural/meta changes (frontmatter tuning, adding skills, progressive disclosure restructuring), use the `skill-creator` or `plugin-dev:skill-development` skills rather than editing blind.

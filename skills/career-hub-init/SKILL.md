@@ -16,6 +16,50 @@ The user wants to start a fresh career hub. Typical prompts:
 
 See `../references/hub-detection.md` for when to refuse.
 
+## Hub Structure
+
+The hub produced by this skill has this mandated structure:
+
+```
+<hub>/
+├── PRINCIPLES.md
+├── README.md
+├── a.foundations/
+│   ├── identity.md
+│   ├── positioning.md
+│   ├── biographical-facts.md
+│   └── operating-notes.md
+├── b.history/
+├── c.projects/
+├── d.capabilities/
+├── e.artefacts/
+│   ├── README.md
+│   └── index.md
+├── f.pipeline/
+│   ├── target-roles.md
+│   ├── unwritten-case-studies.md
+│   ├── open-threads.md
+│   └── application-log.md
+├── g.backlog/
+│   └── README.md
+└── docs/superpowers/
+    ├── specs/
+    └── plans/
+```
+
+## Principles (seeded into `PRINCIPLES.md`)
+
+1. **Category precedence.** Lower-letter category wins; others cross-link.
+2. **Visibility is explicit.** Every file declares `public | private | confidential`.
+3. **Confidential sibling pattern.** `.private.md` sibling for candid retrospection.
+4. **Status markers.** `active | draft | archived`. No `deprecated`.
+5. **Templates for all docs.**
+6. **Stubs, not blanks.** `init` seeds stubs with `<!-- TODO -->` markers.
+7. **Canonical-here vs external.** `e.artefacts/index.md` tracks both with a migration rule.
+8. **Hub-first.** Source of truth.
+9. **Draft-from-known-content-ask-only-gap-questions.**
+10. **Every claim verifiable.**
+
 ## Behaviour
 
 ### Step 1 — Confirm
@@ -107,7 +151,7 @@ last_updated: <today>
 
 ## Visibility Taxonomy
 
-<copy from ../skills/career-hub/references/taxonomy.md axis 2>
+<copy from ../references/taxonomy.md axis 2>
 
 ## Confidential Sibling Files (`.private.md`)
 
@@ -221,13 +265,25 @@ If the user already has `cwd` under git, skip `git init` and add-commit on the c
 Career hub scaffolded at <cwd>.
 
 Next steps:
-- `build foundations` — fill identity, positioning, biographical facts, operating notes.
-- `build roles` — start populating role cards.
-- `build projects` — start populating project case studies.
-- `build capabilities` — enrich the 6 seed capability cards.
+- `career-hub-build foundations` — fill identity, positioning, biographical facts, operating notes.
+- `career-hub-build roles` — start populating role cards.
+- `career-hub-build projects` — start populating project case studies.
+- `career-hub-build capabilities` — enrich the 6 seed capability cards.
 
-Or `build` with no argument to get a menu.
+Or `career-hub-build` with no argument to get a menu.
 ```
+
+## Prior Art
+
+This skill draws on and differentiates from:
+
+- **olegvg/resume-tailor-plugin** — single-file master profile, per-role visibility tags.
+- **nyinyinyanlin/profile-vault-obsidian** — folder-per-category Obsidian vault.
+- **erichowens/career-biographer + cv-creator** — interview-plus-render split, empathetic interview style.
+- **jacksenechal/resume** — markdown resume with branch-based tailoring.
+- **demansou/resume-builder** — evidence-mining, confidentiality-by-design.
+
+Differentiators: category taxonomy with precedence; `.private.md` siblings; gap-question-only interview posture; `e.artefacts/` with migration rule; `g.backlog/` category; hub-first philosophy.
 
 ## Refuses
 

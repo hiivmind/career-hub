@@ -14,9 +14,17 @@ Typical prompts:
 - "fill out my role history"
 - "let's update my career hub"
 
+## Design Philosophy
+
+**Hub-first, rendering-second.** The hub is the source of truth; CVs, LinkedIn, and GitHub profile pages are views onto it. Every public claim traces to an entry in the hub.
+
+**Draft-from-known-content, ask-only-gap-questions.** When `build` enriches a stub, Claude drafts from existing hub content and cross-references, and asks the user only *gap questions* — never redundant questions. Fast, low-friction enrichment.
+
+**Every claim verifiable.** No unverifiable adjectives ("expert", "pioneered"). Scale numbers and verification methods live in `a.foundations/biographical-facts.md`.
+
 ## Prerequisites
 
-- `cwd` is a compliant hub (see `../references/hub-detection.md`). Refuse otherwise with a pointer to `init`.
+- `cwd` is a compliant hub (see `../references/hub-detection.md`). Refuse otherwise with a pointer to `career-hub-init`.
 
 ## Behaviour
 

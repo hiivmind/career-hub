@@ -1,12 +1,12 @@
-# cv-opti — Skill Guide
+# career-hub-optimise-cv — Skill Guide
 
-Deep dive on the `cv-opti` skill within the [`career-hub`](README.md) plugin.
+Deep dive on the `career-hub-optimise-cv` skill within the [`career-hub`](README.md) plugin.
 
-> **Sibling skill:** `career-hub` produces a canonical career repo and renders an ATS-friendly markdown CV via `publish cv`. `cv-opti` then tunes that CV (or any existing CV) against a specific job description. Use them together for the full flow; either alone is fine.
+> **Sibling skill:** `career-hub-publish` produces an ATS-friendly markdown CV from a career hub. `career-hub-optimise-cv` then tunes that CV (or any existing CV) against a specific job description. Use them together for the full flow; either alone is fine.
 
 ## Overview
 
-`cv-opti` is a Claude skill that helps job seekers navigate the dual-AI hiring landscape. It addresses two opposing AI systems:
+`career-hub-optimise-cv` is a Claude skill that helps job seekers navigate the dual-AI hiring landscape. It addresses two opposing AI systems:
 
 1. **ATS screening** — employer systems that reject the majority of resumes before human review.
 2. **Fraud detection** — employer verification systems that flag fabricated claims.
@@ -19,7 +19,7 @@ Every invocation produces two outputs:
 ## Skill Structure
 
 ```
-skills/cv-opti/
+skills/career-hub-optimise-cv/
 ├── SKILL.md                          # entry + workflow
 └── references/
     ├── ats-optimization.md           # formatting & keyword extraction
@@ -100,15 +100,15 @@ Why per-job tailoring matters, static vs dynamic sections, eight-step ~15–20-m
 | **Job-specific tailoring** | Run `customization-protocol.md` → extract 15–25 keywords → reorder competencies and achievements → verify coverage → deliver tuned CV. |
 | **Rejection analysis** | Cross-check CV against all references → identify ATS + fraud + customization gaps → deliver improvement plan + optimized CV. |
 
-## Composition with `career-hub`
+## Composition with career-hub skills
 
-When a user has both skills available, the canonical flow is:
+When a user has the full plugin, the canonical flow is:
 
 ```
-career-hub:init     → empty hub scaffolded at cwd
-career-hub:build    → roles, projects, capabilities enriched via interview
-career-hub:publish cv  → ATS-friendly markdown CV rendered from hub
-cv-opti             → CV tuned against a specific job description
+career-hub-init        → empty hub scaffolded at cwd
+career-hub-build       → roles, projects, capabilities enriched via interview
+career-hub-publish cv  → ATS-friendly markdown CV rendered from hub
+career-hub-optimise-cv → CV tuned against a specific job description
 ```
 
 Each step is independent — users can enter the flow at any point with whatever artefact they already have.
@@ -121,7 +121,7 @@ Each step is independent — users can enter the flow at any point with whatever
 4. **Efficient** — per-job tailoring in ~15–20 minutes.
 5. **Honest** — never encourages fabrication.
 6. **Reusable** — works across technical and professional roles.
-7. **Composable** — pairs cleanly with `career-hub:publish cv`.
+7. **Composable** — pairs cleanly with `career-hub-publish cv`.
 
 ## Limitations
 
@@ -133,7 +133,5 @@ Each step is independent — users can enter the flow at any point with whatever
 ## See Also
 
 - [`README.md`](README.md) — plugin overview and installation.
-- [`QUICK_REFERENCE.md`](QUICK_REFERENCE.md) — both skills at a glance.
+- [`QUICK_REFERENCE.md`](QUICK_REFERENCE.md) — all skills at a glance.
 - [`CLAUDE.md`](CLAUDE.md) — guidance for Claude Code working on this repo.
-- [`skills/career-hub/SKILL.md`](skills/career-hub/SKILL.md) — sibling skill entry point.
-- [`skills/cv-opti/SKILL.md`](skills/cv-opti/SKILL.md) — `cv-opti` skill entry point.

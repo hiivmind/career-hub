@@ -35,4 +35,4 @@ Per-section word / character / line limits. Explicit upper bounds, plus what to 
 
 ### `## Consistency checks`
 
-A checklist that the `publish` sub-skill appends to its output. Every render should cross-check claims against `biographical-facts.md` and cross-surface sibling drafts.
+A checklist that the `career-hub-publish` skill appends to its output. Every render should cross-check claims against `biographical-facts.md` and cross-surface sibling drafts.

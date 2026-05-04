@@ -1,6 +1,6 @@
 # Target Spec — CV
 
-Renders an ATS-friendly, 1-2 page markdown CV from the hub's canonical content. Feeds into `cv-opti` for per-job tuning.
+Renders an ATS-friendly, 1-2 page markdown CV from the hub's canonical content. Feeds into `career-hub-optimise-cv` for per-job tuning.
 
 ## Output
 
@@ -93,6 +93,6 @@ Available upon request.
 
 ## Notes
 
-- This is the CV pre-optimisation. Feed the output to the sibling `cv-opti` skill for per-JD tuning, ATS keyword extraction, and fraud-proofing.
+- This is the CV pre-optimisation. Feed the output to the sibling `career-hub-optimise-cv` skill for per-JD tuning, ATS keyword extraction, and fraud-proofing.
 - Do not include the Objective or Career Summary Objective pattern — too generic; replaced by Professional Summary.
 - If the user explicitly requests a longer academic CV (publications, talks, etc.), note the mismatch and suggest they add sections via a `cv-academic` target spec instead.

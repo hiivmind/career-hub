@@ -15,9 +15,17 @@ Typical prompts:
 - "publish github-profile"
 - "render a <custom-target>"
 
+## Composition with `career-hub-optimise-cv`
+
+```
+career-hub-publish cv  →  career-hub-optimise-cv  →  ATS-optimised, JD-tuned CV
+```
+
+The two skills do not depend on each other at runtime but compose naturally: `career-hub-publish cv` produces an ATS-friendly markdown CV, which `career-hub-optimise-cv` then tunes against a specific job description.
+
 ## Prerequisites
 
-- `cwd` is a compliant hub (see `../references/hub-detection.md`). Refuse otherwise with a pointer to `init`.
+- `cwd` is a compliant hub (see `../references/hub-detection.md`). Refuse otherwise with a pointer to `career-hub-init`.
 
 ## Behaviour
 
